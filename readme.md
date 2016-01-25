@@ -29,9 +29,11 @@ When you rotate the device, the things you marked as complete are no longer cros
 
 **Question**: Why did this happen?
 <br />Answer:
+The activity is destroyed without saving . It then creates it again.
 
 **Question**: How do you fix this issue?
 <br />Answer:
+You create a sharedPreferences of which saves the file to your phone when it pauses(onPause()). And then you call the sharedPreferences again onResume().
 
 
 ####Scenario 2:
@@ -43,6 +45,14 @@ When you opened the app again, and opened the book, it started from page 1 (and 
 **Question**: How would you fix this issue?
 <br />**Answer**:
 
+Create a sharedPreferences that saves the page number (save the int) when the onPause with is called, and displays the page number when the onResume is called (get that int number back).
+
+
+OnSavedPreferences will hold it within the activity. Will not really save. SharedPreferences saves onto the phone and can be accessed anytime. 
+
+
+
+
 
 ####Scenario 3:
 
@@ -53,6 +63,9 @@ Take this scenario. On a post on Facebook, you click the “comment” button (w
 **Question**: How would you implement this feature? Be specific; what lifecycle methods would you use in CommentActivity, and what techniques would you use?
 <br />**Answer**:
 
+on the onPause method, you do an EditText.getText().toString(); and you save that to an SharedPreferences. Then when the onResume(); is called, you can called the string and put it baack in with editText.setText():
+
+
 
 
 In your own words…
@@ -60,12 +73,38 @@ In your own words…
 
 **Question**: What are the methods of the Activity Lifecycle?
 <br />**Answer**: 
+onCreate();
+onStart();
+onResume();
+
+onPause();
+onStop();
+onDestroy();
 
 **Question**: What order are the methods called?
 <br />**Answer**: 
+The order that I set them in above. 
+
 
 **Question**: What is a bundle?
 <br />**Answer**: 
+A bundle is a thing with stuff in it. 
+When you create a new intent you are creating a new bundle. 
+
 
 **Question**: How do you get the Shared Preferences of an app?
 <br />**Answer**:
+If you are looking at context you can always get SharedPreferences.
+SharedPreferences sharedpreferences = getSharedPreferences("com.simon.appname")
+SharedPreferences.Editor editor = sharedPreferences.edit();
+sharedpreferences.putString("Key", data);
+editor.commit();
+
+
+//Get data from Shared Preferences
+sharedpreferences.getString("key","DEFAULT..or nothing Found")  ----- if you do not do a "DEFAULT", it will return null. 
+
+
+
+
+
